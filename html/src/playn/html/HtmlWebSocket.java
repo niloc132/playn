@@ -19,39 +19,45 @@ import com.google.gwt.typedarrays.shared.ArrayBuffer;
 import com.google.gwt.typedarrays.shared.Uint8Array;
 import com.google.gwt.typedarrays.shared.TypedArrays;
 
+import elemental2.dom.Event;
+import elemental2.dom.WebSocket;
+import elemental2.dom.WebSocket.OncloseCallbackFn;
+import elemental2.dom.WebSocket.OnmessageCallbackFn;
+import elemental2.dom.WebSocket.OnopenCallbackFn;
 import playn.core.Net;
-
-import playn.html.websocket.CloseEvent;
-import playn.html.websocket.MessageEvent;
-import playn.html.websocket.OpenEvent;
-import playn.html.websocket.WebSocket;
 
 public class HtmlWebSocket implements Net.WebSocket {
 
   private WebSocket ws;
 
   HtmlWebSocket(String url, final Listener listener) {
-    ws = WebSocket.create(url);
-    ws.setListener(new WebSocket.Listener() {
+    ws = new WebSocket(url);
+    ws.onopen = new OnopenCallbackFn() {
       @Override
-      public void onOpen(WebSocket socket, OpenEvent event) {
+      public Object onInvoke(Event event) {
         listener.onOpen();
+        return null;
       }
-
+    };
+    ws.onmessage = new OnmessageCallbackFn() {
       @Override
-      public void onMessage(WebSocket socket, MessageEvent event) {
-        if (event.dataIsText()) {
-          listener.onTextMessage(event.stringData());
+      public Object onInvoke(elemental2.dom.MessageEvent<Object> event) {
+        if (event.data instanceof String) {
+          listener.onTextMessage((String) event.data);
         } else {
-          listener.onDataMessage(TypedArrayHelper.wrap(event.bufferData()));
+          listener.onDataMessage(TypedArrayHelper.wrap((ArrayBuffer) event.data));
         }
+        return null;
       }
+    };
 
+    ws.onclose = new OncloseCallbackFn() {
       @Override
-      public void onClose(WebSocket socket, CloseEvent event) {
+      public Object onInvoke(Event p0) {
         listener.onClose();
+        return null;
       }
-    });
+    };
   }
 
   @Override
@@ -78,6 +84,6 @@ public class HtmlWebSocket implements Net.WebSocket {
     for (int i = 0; i < len; i++) {
       view.set(i, data.get(i));
     }
-    ws.send(buf);
+    ws.send((elemental2.core.ArrayBuffer)buf);
   }
 }

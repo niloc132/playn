@@ -17,12 +17,11 @@
 
 package java.nio;
 
-import java.nio.ByteOrder;
+import elemental2.core.ArrayBuffer;
+import elemental2.core.ArrayBufferView;
+import elemental2.core.Int8Array;
 
-import com.google.gwt.typedarrays.shared.ArrayBuffer;
-import com.google.gwt.typedarrays.shared.ArrayBufferView;
-import com.google.gwt.typedarrays.shared.Int8Array;
-import com.google.gwt.typedarrays.shared.TypedArrays;
+import java.nio.ByteOrder;
 
 /** A buffer for bytes.
  * <p> A byte buffer can be created in either one of the following ways: </p>
@@ -69,8 +68,8 @@ public final class ByteBuffer extends Buffer implements Comparable<ByteBuffer>, 
 
     static ByteBuffer copy (ByteBuffer other, int markOfOther) {
       ByteBuffer buf = new ByteBuffer(
-        other.byteArray.buffer(), other.capacity(),
-          other.byteArray.byteOffset());
+        other.byteArray.buffer, other.capacity(),
+              (int) other.byteArray.byteOffset); //bad cast required in beta1
       buf.limit = other.limit();
       buf.position = other.position();
       buf.mark = markOfOther;
@@ -82,17 +81,17 @@ public final class ByteBuffer extends Buffer implements Comparable<ByteBuffer>, 
      *
      * @param capacity the capacity of the buffer. */
     ByteBuffer (int capacity) {
-        this(TypedArrays.createArrayBuffer(capacity));
+        this(new ArrayBuffer(capacity));
     }
 
     ByteBuffer (ArrayBuffer buf) {
-        super(buf.byteLength());
-        byteArray = TypedArrays.createInt8Array(buf);
+        super((int)buf.byteLength);
+        byteArray = new Int8Array(buf);
     }
 
     ByteBuffer (ArrayBuffer buffer, int capacity, int offset) {
         super(capacity);
-        byteArray = TypedArrays.createInt8Array(buffer, offset, capacity);
+        byteArray = new Int8Array(buffer, offset, capacity);
     }
 
 //    /** Returns a char buffer which is based on the remaining content of this byte buffer.
@@ -199,7 +198,7 @@ public final class ByteBuffer extends Buffer implements Comparable<ByteBuffer>, 
 
       int rem = remaining();
       for (int i = 0; i < rem; i++) {
-        byteArray.set(i, byteArray.get(position + i));
+        byteArray.setAt(i, byteArray.getAt(position + i));
       }
 
       position = limit - position;
@@ -285,7 +284,7 @@ public final class ByteBuffer extends Buffer implements Comparable<ByteBuffer>, 
 // if (position == limit) {
 // throw new BufferUnderflowException();
 // }
-        return byteArray.get(position++);
+        return (byte)(double) byteArray.getAt(position++);
     }
     /** Reads bytes from the current position into the specified byte array and increases the
      * position by the number of bytes read.
@@ -340,7 +339,7 @@ public final class ByteBuffer extends Buffer implements Comparable<ByteBuffer>, 
 // if (index < 0 || index >= limit) {
 // throw new IndexOutOfBoundsException();
 // }
-        return byteArray.get(index);
+        return (byte)(double) byteArray.getAt(index);
     }
 
     /** Returns the char at the current position and increases the position by 2.
@@ -442,12 +441,12 @@ public final class ByteBuffer extends Buffer implements Comparable<ByteBuffer>, 
       if (order == ByteOrder.BIG_ENDIAN) {
           for (int i = 0; i < 4; i++) {
               bytes = bytes << 8;
-              bytes = bytes | (byteArray.get(index + i) & 0xFF);
+              bytes = bytes | (((byte)(double)byteArray.getAt(index + i)) & 0xFF);
           }
       } else {
           for (int i = 3; i >= 0; i--) {
               bytes = bytes << 8;
-              bytes = bytes | (byteArray.get(index + i) & 0xFF);
+              bytes = bytes | (((byte)(double)byteArray.getAt(index + i)) & 0xFF);
           }
       }
       return bytes;
@@ -483,12 +482,12 @@ public final class ByteBuffer extends Buffer implements Comparable<ByteBuffer>, 
       if (order == ByteOrder.BIG_ENDIAN) {
           for (int i = 0; i < 8; i++) {
               bytes = bytes << 8;
-              bytes = bytes | (byteArray.get(baseOffset + i) & 0xFF);
+              bytes = bytes | (((byte)(double)byteArray.getAt(baseOffset + i)) & 0xFF);
           }
       } else {
           for (int i = 7; i >= 0; i--) {
               bytes = bytes << 8;
-              bytes = bytes | (byteArray.get(baseOffset + i) & 0xFF);
+              bytes = bytes | (((byte)(double) byteArray.getAt(baseOffset + i)) & 0xFF);
           }
       }
       return bytes;
@@ -522,11 +521,11 @@ public final class ByteBuffer extends Buffer implements Comparable<ByteBuffer>, 
     public final short getShort (int baseOffset) {
       short bytes = 0;
       if (order == ByteOrder.BIG_ENDIAN) {
-          bytes = (short)(byteArray.get(baseOffset) << 8);
-          bytes |= (byteArray.get(baseOffset + 1) & 0xFF);
+          bytes = (short)(((byte) (double) byteArray.getAt(baseOffset)) << 8);
+          bytes |= (((byte) (double) byteArray.getAt(baseOffset + 1)) & 0xFF);
       } else {
-          bytes = (short)(byteArray.get(baseOffset + 1) << 8);
-          bytes |= (byteArray.get(baseOffset) & 0xFF);
+          bytes = (short) (((byte) (double) byteArray.getAt(baseOffset + 1)) << 8);
+          bytes |= (((byte) (double) byteArray.getAt(baseOffset)) & 0xFF);
       }
       return bytes;
     }
@@ -596,7 +595,7 @@ public final class ByteBuffer extends Buffer implements Comparable<ByteBuffer>, 
    // if (position == limit) {
    // throw new BufferOverflowException();
    // }
-           byteArray.set(position++, b);
+           byteArray.setAt(position++, (double) b);
            return this;
     }
 
@@ -636,7 +635,7 @@ public final class ByteBuffer extends Buffer implements Comparable<ByteBuffer>, 
             throw new BufferOverflowException();
         }
         for (int i = 0; i < len; i++) {
-          byteArray.set(i + position, src[off + i]);
+          byteArray.setAt(i + position, (double)src[off + i]);
         }
         position += len;
         return this;
@@ -677,7 +676,7 @@ public final class ByteBuffer extends Buffer implements Comparable<ByteBuffer>, 
       // if (index < 0 || index >= limit) {
       // throw new IndexOutOfBoundsException();
       // }
-      byteArray.set(index, b);
+      byteArray.setAt(index, (double) b);
       return this;
     }
 
@@ -802,12 +801,12 @@ public final class ByteBuffer extends Buffer implements Comparable<ByteBuffer>, 
     public final ByteBuffer putInt (int baseOffset, int value) {
       if (order == ByteOrder.BIG_ENDIAN) {
           for (int i = 3; i >= 0; i--) {
-              byteArray.set(baseOffset + i, (byte)(value & 0xFF));
+              byteArray.setAt(baseOffset + i, (double)(value & 0xFF));
               value = value >> 8;
           }
       } else {
           for (int i = 0; i <= 3; i++) {
-              byteArray.set(baseOffset + i, (byte)(value & 0xFF));
+              byteArray.setAt(baseOffset + i, (double)(value & 0xFF));
               value = value >> 8;
           }
       }
@@ -848,12 +847,12 @@ public final class ByteBuffer extends Buffer implements Comparable<ByteBuffer>, 
     public final ByteBuffer putLong (int baseOffset, long value) {
       if (order == ByteOrder.BIG_ENDIAN) {
           for (int i = 7; i >= 0; i--) {
-              byteArray.set(baseOffset + i, (byte)(value & 0xFF));
+              byteArray.setAt(baseOffset + i, (double) (byte) (value & 0xFF));
               value = value >> 8;
           }
       } else {
           for (int i = 0; i <= 7; i++) {
-              byteArray.set(baseOffset + i, (byte)(value & 0xFF));
+              byteArray.setAt(baseOffset + i, (double) (byte) (value & 0xFF));
               value = value >> 8;
           }
       }
@@ -890,11 +889,11 @@ public final class ByteBuffer extends Buffer implements Comparable<ByteBuffer>, 
      */
     public final ByteBuffer putShort(int baseOffset, short value) {
       if (order == ByteOrder.BIG_ENDIAN) {
-          byteArray.set(baseOffset, (byte)((value >> 8) & 0xFF));
-          byteArray.set(baseOffset + 1, (byte)(value & 0xFF));
+          byteArray.setAt(baseOffset, (double) (byte) ((value >> 8) & 0xFF));
+          byteArray.setAt(baseOffset + 1, (double) (byte) (value & 0xFF));
       } else {
-          byteArray.set(baseOffset + 1, (byte)((value >> 8) & 0xFF));
-          byteArray.set(baseOffset, (byte)(value & 0xFF));
+          byteArray.setAt(baseOffset + 1, (double)(byte) ((value >> 8) & 0xFF));
+          byteArray.setAt(baseOffset, (double)(byte) (value & 0xFF));
       }
       return this;
       }
@@ -912,7 +911,7 @@ public final class ByteBuffer extends Buffer implements Comparable<ByteBuffer>, 
      */
     public ByteBuffer slice () {
       ByteBuffer slice = new ByteBuffer(
-        byteArray.buffer(), remaining(), byteArray.byteOffset() + position);
+        byteArray.buffer, remaining(), ((int)byteArray.byteOffset) + position);
       slice.order = order;
       return slice;
     }
@@ -921,7 +920,7 @@ public final class ByteBuffer extends Buffer implements Comparable<ByteBuffer>, 
      *
      * @return a string representing the state of this byte buffer.
      */
-    public String toString () {
+    public String toString() {
         StringBuffer buf = new StringBuffer();
         buf.append(getClass().getName());
         buf.append(", status: capacity="); //$NON-NLS-1$
@@ -937,11 +936,11 @@ public final class ByteBuffer extends Buffer implements Comparable<ByteBuffer>, 
 //        return new StringByteBuffer(s);
 //    }
 
-    public ArrayBufferView getTypedArray () {
+    public ArrayBufferView getTypedArray() {
       return byteArray;
     }
 
-    public int getElementSize () {
+    public int getElementSize() {
       return 1;
     }
 

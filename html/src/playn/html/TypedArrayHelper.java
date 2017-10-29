@@ -15,15 +15,18 @@
  */
 package playn.html;
 
-import java.nio.ByteBuffer;
+import elemental2.core.ArrayBuffer;
 
-import com.google.gwt.typedarrays.shared.ArrayBuffer;
+import java.nio.ByteBuffer;
 
 /**
  * Allows us to wrap an existing typed array buffer in a ByteBuffer.
  */
 public class TypedArrayHelper {
 
+  public static ByteBuffer wrap (com.google.gwt.typedarrays.shared.ArrayBuffer ab) {
+    return wrapper.wrap((ArrayBuffer)ab);
+  }
   public static ByteBuffer wrap (ArrayBuffer ab) {
     return wrapper.wrap(ab);
   }

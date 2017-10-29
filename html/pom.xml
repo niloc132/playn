@@ -53,6 +53,12 @@
     </dependency>
 
     <dependency>
+      <groupId>com.google.elemental2</groupId>
+      <artifactId>elemental2-dom</artifactId>
+      <version>${elemental2.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>com.allen-sauer.gwt.log</groupId>
       <artifactId>gwt-log</artifactId>
       <version>3.1.8</version>

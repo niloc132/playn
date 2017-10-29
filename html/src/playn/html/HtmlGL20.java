@@ -25,11 +25,6 @@ import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.typedarrays.shared.ArrayBufferView;
-import com.google.gwt.typedarrays.shared.Float32Array;
-import com.google.gwt.typedarrays.shared.Int16Array;
-import com.google.gwt.typedarrays.shared.Int32Array;
-import com.google.gwt.typedarrays.shared.TypedArrays;
 import com.google.gwt.webgl.client.WebGLBuffer;
 import com.google.gwt.webgl.client.WebGLFramebuffer;
 import com.google.gwt.webgl.client.WebGLProgram;
@@ -53,6 +48,7 @@ import static com.google.gwt.webgl.client.WebGLRenderingContext.UNPACK_PREMULTIP
 import static com.google.gwt.webgl.client.WebGLRenderingContext.UNSIGNED_BYTE;
 import static com.google.gwt.webgl.client.WebGLRenderingContext.UNSIGNED_SHORT;
 
+import elemental2.core.*;
 import playn.core.GL20;
 
 /**
@@ -177,21 +173,21 @@ public final class HtmlGL20 extends GL20 {
       return webGLArray;
     }
 
-    int byteOffset = webGLArray.byteOffset() + buffer.position() * bufferElementSize;
+    int byteOffset = ((int)webGLArray.byteOffset) + buffer.position() * bufferElementSize;
 
     switch (type) {
       case FLOAT:
-        return TypedArrays.createFloat32Array(webGLArray.buffer(), byteOffset, byteSize / 4);
+        return new Float32Array(webGLArray.buffer, byteOffset, byteSize / 4);
       case UNSIGNED_BYTE:
-        return TypedArrays.createUint8Array(webGLArray.buffer(), byteOffset, byteSize);
+        return new Uint8Array(webGLArray.buffer, byteOffset, byteSize);
       case UNSIGNED_SHORT:
-        return TypedArrays.createUint16Array(webGLArray.buffer(), byteOffset, byteSize / 2);
+        return new Uint16Array(webGLArray.buffer, byteOffset, byteSize / 2);
       case INT:
-        return TypedArrays.createInt32Array(webGLArray.buffer(), byteOffset, byteSize / 4);
+        return new Int32Array(webGLArray.buffer, byteOffset, byteSize / 4);
       case SHORT:
-        return TypedArrays.createInt16Array(webGLArray.buffer(), byteOffset, byteSize / 2);
+        return new Int16Array(webGLArray.buffer, byteOffset, byteSize / 2);
       case BYTE:
-        return TypedArrays.createInt8Array(webGLArray.buffer(), byteOffset, byteSize);
+        return new Int8Array(webGLArray.buffer, byteOffset, byteSize);
       default:
         throw new IllegalArgumentException("Type: " + type);
     }
@@ -869,9 +865,9 @@ public final class HtmlGL20 extends GL20 {
   public void glGetIntegerv(int pname, IntBuffer params) {
     Int32Array result = (Int32Array) gl.getParameterv(pname);
     int pos = params.position();
-    int len = result.length();
+    int len = (int) result.length;
     for (int i = 0; i < len; i++) {
-      params.put(pos + i, result.get(i));
+      params.put(pos + i, (int)(double)result.getAt(i));
     }
   }
 
@@ -988,16 +984,16 @@ public final class HtmlGL20 extends GL20 {
   @Override
   public void glGetUniformfv(int program, int location, FloatBuffer params) {
     Float32Array v = gl.getUniformv(programs.get(program), uniforms.get(program).get(location));
-    for (int i = 0; i < v.length(); i++) {
-      params.put(params.position() + i, v.get(i));
+    for (int i = 0; i < v.length; i++) {
+      params.put(params.position() + i, (float)(double)v.getAt(i));
     }
   }
 
   @Override
   public void glGetUniformiv(int program, int location, IntBuffer params) {
     Int32Array v = gl.getUniformv(programs.get(program), uniforms.get(program).get(location));
-    for (int i = 0; i < v.length(); i++) {
-      params.put(params.position() + i, v.get(i));
+    for (int i = 0; i < v.length; i++) {
+      params.put(params.position() + i, (int) (double) v.getAt(i));
     }
   }
 
@@ -1017,8 +1013,8 @@ public final class HtmlGL20 extends GL20 {
   @Override
   public void glGetVertexAttribfv(int index, int pname, FloatBuffer params) {
     Float32Array v = gl.getVertexAttribv(index, pname);
-    for (int i = 0; i < v.length(); i++) {
-      params.put(params.position() + i, v.get(i));
+    for (int i = 0; i < v.length; i++) {
+      params.put(params.position() + i, (float)(double)v.getAt(i));
     }
   }
 

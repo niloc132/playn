@@ -15,26 +15,25 @@
  */
 package java.nio;
 
-import com.google.gwt.typedarrays.shared.Float32Array;
-import com.google.gwt.typedarrays.shared.Float64Array;
-import com.google.gwt.typedarrays.shared.Int32Array;
-import com.google.gwt.typedarrays.shared.Int8Array;
-import com.google.gwt.typedarrays.shared.TypedArrays;
+import elemental2.core.Float32Array;
+import elemental2.core.Float64Array;
+import elemental2.core.Int32Array;
+import elemental2.core.Int8Array;
 
 class Numbers {
-        static Int8Array wba = TypedArrays.createInt8Array(8);
-        static Int32Array wia = TypedArrays.createInt32Array(wba.buffer(), 0, 2);
-        static Float32Array wfa = TypedArrays.createFloat32Array(wba.buffer(), 0, 2);
-        static Float64Array wda = TypedArrays.createFloat64Array(wba.buffer(), 0, 1);
+        static Int8Array wba = new Int8Array(8);
+        static Int32Array wia = new Int32Array(wba.buffer, 0, 2);
+        static Float32Array wfa = new Float32Array(wba.buffer, 0, 2);
+        static Float64Array wda = new Float64Array(wba.buffer, 0, 1);
 
         public static final int floatToIntBits(float f) {
-                wfa.set(0, f);
-                return wia.get(0);
+                wfa.setAt(0, (double) f);
+                return (int)(double)wia.getAt(0);
         }
 
         public static final float intBitsToFloat(int i) {
-                wia.set(0, i);
-                return wfa.get(0);
+                wia.setAt(0, (double) i);
+                return (float)(double)wfa.getAt(0);
         }
 
         public static final double longBitsToDouble(long i) {
@@ -47,26 +46,26 @@ class Numbers {
 
         // TODO(jgw): Ugly hack to avoid longs.
         public static final void setDouble(double d) {
-          wda.set(0, d);
+          wda.setAt(0, d);
         }
 
         public static final double getDouble() {
-          return wda.get(0);
+          return wda.getAt(0);
         }
 
         public static final int getLoInt() {
-          return wia.get(0);
+          return (int)(double)wia.getAt(0);
         }
 
         public static final int getHiInt() {
-          return wia.get(1);
+          return (int)(double)wia.getAt(1);
         }
 
         public static final void setLoInt(int i) {
-          wia.set(0, i);
+          wia.setAt(0, (double)i);
         }
 
         public static final void setHiInt(int i) {
-          wia.set(1, i);
+          wia.setAt(1, (double)i);
         }
 }

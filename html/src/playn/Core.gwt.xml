@@ -39,6 +39,7 @@
 
   <!-- Flash/HTML5/Native audio support -->
   <inherits name="com.allen_sauer.gwt.voices.gwt-voices" />
+  <inherits name="elemental2.dom.Dom"/>
   <!--
     This allows us to replace the normal compile time deferred binding implementation
     decision, with a runtime decision, based on the runtime user agent. Doing so, allows us to use

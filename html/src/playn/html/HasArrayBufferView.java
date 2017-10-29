@@ -15,7 +15,7 @@
  ******************************************************************************/
 package playn.html;
 
-import com.google.gwt.typedarrays.shared.ArrayBufferView;
+import elemental2.core.ArrayBufferView;
 
 /**
  * Allows us to get direct access to the typed array used by the nio buffer emulation in GWT. All
@@ -25,11 +25,11 @@ import com.google.gwt.typedarrays.shared.ArrayBufferView;
 public interface HasArrayBufferView {
 
   /* Returns the underlying typed array buffer view. */
-  ArrayBufferView getTypedArray ();
+  ArrayBufferView getTypedArray();
 
   /** Returns the element size in bytes (e.g. 4 for a FloatBuffer and 1 for a ByteBuffer). */
-  int getElementSize ();
+  int getElementSize();
 
   /** Returns the open GL element type constant corresponding to the buffer contents. */
-  int getElementType ();
+  int getElementType();
 }

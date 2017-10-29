@@ -17,9 +17,8 @@
 
 package java.nio;
 
-import com.google.gwt.typedarrays.shared.ArrayBufferView;
-import com.google.gwt.typedarrays.shared.Int16Array;
-import com.google.gwt.typedarrays.shared.TypedArrays;
+import elemental2.core.ArrayBufferView;
+import elemental2.core.Int16Array;
 
 /** A buffer of shorts.
  * <p> A short buffer can be created in either of the following ways: </p>
@@ -59,9 +58,9 @@ public final class ShortBuffer extends Buffer
       super((byteBuffer.capacity() >> 1));
       this.byteBuffer = byteBuffer;
       this.byteBuffer.clear();
-      this.shortArray = TypedArrays.createInt16Array(
-          byteBuffer.byteArray.buffer(),
-          byteBuffer.byteArray.byteOffset(), capacity);
+      this.shortArray = new Int16Array(
+          byteBuffer.byteArray.buffer,
+          byteBuffer.byteArray.byteOffset, capacity);
     }
 
     /** Compacts this short buffer.
@@ -164,7 +163,7 @@ public final class ShortBuffer extends Buffer
       // if (position == limit) {
       // throw new BufferUnderflowException();
        // }
-      return shortArray.get(position++);
+      return (short)(double)shortArray.getAt(position++);
     }
 
     /** Reads shorts from the current position into the specified short array and increases the
@@ -215,7 +214,7 @@ public final class ShortBuffer extends Buffer
       // if (index < 0 || index >= limit) {
       // throw new IndexOutOfBoundsException();
       // }
-      return shortArray.get(index);
+      return (short)(double)shortArray.getAt(index);
     }
 
     /** Indicates whether this buffer is based on a short array and is read/write.
@@ -274,7 +273,7 @@ public final class ShortBuffer extends Buffer
       // if (position == limit) {
       // throw new BufferOverflowException();
       // }
-      shortArray.set(position++, c);
+      shortArray.setAt(position++, (double) c);
       return this;
     }
 
@@ -353,7 +352,7 @@ public final class ShortBuffer extends Buffer
       // if (index < 0 || index >= limit) {
       // throw new IndexOutOfBoundsException();
       // }
-      shortArray.set(index, c);
+      shortArray.setAt(index, (double) c);
       return this;
     }
 

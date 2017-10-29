@@ -17,9 +17,8 @@
 
 package java.nio;
 
-import com.google.gwt.typedarrays.shared.ArrayBufferView;
-import com.google.gwt.typedarrays.shared.Float32Array;
-import com.google.gwt.typedarrays.shared.TypedArrays;
+import elemental2.core.ArrayBufferView;
+import elemental2.core.Float32Array;
 
 /** A buffer of floats.
  * <p>
@@ -60,8 +59,8 @@ public final class FloatBuffer extends Buffer
       super((byteBuffer.capacity() >> 2));
       this.byteBuffer = byteBuffer;
       this.byteBuffer.clear();
-      this.floatArray = TypedArrays.createFloat32Array(
-        byteBuffer.byteArray.buffer(), byteBuffer.byteArray.byteOffset(), capacity);
+      this.floatArray = new Float32Array(
+        byteBuffer.byteArray.buffer, byteBuffer.byteArray.byteOffset, capacity);
     }
 
     /** Compacts this float buffer.
@@ -167,7 +166,7 @@ public final class FloatBuffer extends Buffer
       // if (position == limit) {
       // throw new BufferUnderflowException();
       // }
-      return floatArray.get(position++);
+      return (float)(double)floatArray.getAt(position++);
     }
 
     /** Reads floats from the current position into the specified float array and increases the
@@ -219,7 +218,7 @@ public final class FloatBuffer extends Buffer
       // if (index < 0 || index >= limit) {
       // throw new IndexOutOfBoundsException();
       // }
-      return floatArray.get(index);
+      return (float)(double)floatArray.getAt(index);
     }
 
     /** Indicates whether this buffer is based on a float array and is read/write.
@@ -280,7 +279,7 @@ public final class FloatBuffer extends Buffer
    // if (position == limit) {
    // throw new BufferOverflowException();
    // }
-           floatArray.set(position++, c);
+           floatArray.setAt(position++, (double) c);
            return this;
        }
 
@@ -359,7 +358,7 @@ public final class FloatBuffer extends Buffer
       // if (index < 0 || index >= limit) {
       // throw new IndexOutOfBoundsException();
       // }
-      floatArray.set(index, c);
+      floatArray.setAt(index, (double) c);
       return this;
     }
 

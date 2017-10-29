@@ -17,9 +17,8 @@
 
 package java.nio;
 
-import com.google.gwt.typedarrays.shared.ArrayBufferView;
-import com.google.gwt.typedarrays.shared.Int32Array;
-import com.google.gwt.typedarrays.shared.TypedArrays;
+import elemental2.core.ArrayBufferView;
+import elemental2.core.Int32Array;
 
 /** A buffer of ints.
  * <p>
@@ -62,9 +61,9 @@ public final class IntBuffer extends Buffer
       super((byteBuffer.capacity() >> 2));
       this.byteBuffer = byteBuffer;
       this.byteBuffer.clear();
-      this.intArray = TypedArrays.createInt32Array(
-          byteBuffer.byteArray.buffer(),
-          byteBuffer.byteArray.byteOffset(), capacity);
+      this.intArray = new Int32Array(
+          byteBuffer.byteArray.buffer,
+          byteBuffer.byteArray.byteOffset, capacity);
     }
 
     /** Compacts this int buffer.
@@ -169,7 +168,7 @@ public final class IntBuffer extends Buffer
       // if (position == limit) {
       // throw new BufferUnderflowException();
       // }
-      return intArray.get(position++);
+      return (int)(double)intArray.getAt(position++);
     }
 
     /** Reads ints from the current position into the specified int array and increases the
@@ -222,7 +221,7 @@ public final class IntBuffer extends Buffer
       // if (index < 0 || index >= limit) {
       // throw new IndexOutOfBoundsException();
       // }
-      return intArray.get(index);
+      return (int)(double)intArray.getAt(index);
     }
 
     /** Indicates whether this buffer is based on a int array and is read/write.
@@ -282,7 +281,7 @@ public final class IntBuffer extends Buffer
    // if (position == limit) {
    // throw new BufferOverflowException();
    // }
-      intArray.set(position++, c);
+      intArray.setAt(position++, (double)c);
       return this;
     }
 
@@ -361,7 +360,7 @@ public final class IntBuffer extends Buffer
    // if (index < 0 || index >= limit) {
    // throw new IndexOutOfBoundsException();
    // }
-      intArray.set(index, c);
+      intArray.setAt(index, (double)c);
       return this;
     }
 

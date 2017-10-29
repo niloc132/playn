@@ -18,10 +18,11 @@ package com.google.gwt.webgl.client;
 import com.google.gwt.core.client.JsArrayInteger;
 import com.google.gwt.core.client.JsArrayNumber;
 import com.google.gwt.typedarrays.client.JsUtils;
-import com.google.gwt.typedarrays.shared.Float32Array;
-import com.google.gwt.typedarrays.shared.Int32Array;
-import com.google.gwt.typedarrays.shared.Uint16Array;
-import com.google.gwt.typedarrays.shared.Uint8Array;
+import elemental2.core.Float32Array;
+import elemental2.core.Int32Array;
+import elemental2.core.Uint16Array;
+import elemental2.core.Uint8Array;
+import jsinterop.base.Js;
 
 public class ArrayUtils {
 
@@ -93,26 +94,26 @@ public class ArrayUtils {
   }
 
   public static Float32Array createFloat32Array(float[] array) {
-    return JsUtils.createFloat32Array(toJsArray(array));
+    return new Float32Array((double[])Js.uncheckedCast(array));
   }
 
   public static Int32Array createInt32Array(int[] array) {
-    return JsUtils.createInt32Array(toJsArray(array));
+    return new Int32Array((double[])Js.uncheckedCast(array));
   }
 
   public static Uint16Array createUint16Array(short[] array) {
-    return JsUtils.createUint16Array(toJsArrayUnsigned(array));
+    return new Uint16Array((double[])Js.uncheckedCast(array));
   }
 
   public static Uint16Array createUint16Array(int[] array) {
-    return JsUtils.createUint16Array(toJsArray(array));
+    return new Uint16Array((double[])Js.uncheckedCast(array));
   }
 
   public static Uint8Array createUint8Array(byte[] array) {
-    return JsUtils.createUint8Array(toJsArrayUnsigned(array));
+    return new Uint8Array((double[])Js.uncheckedCast(array));
   }
 
   public static Uint8Array createUint8Array(int[] array) {
-    return JsUtils.createUint8Array(toJsArray(array));
+    return new Uint8Array((double[])Js.uncheckedCast(array));
   }
 }

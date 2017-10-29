@@ -22,10 +22,10 @@ import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.dom.client.CanvasElement;
 import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.dom.client.VideoElement;
-import com.google.gwt.typedarrays.shared.ArrayBuffer;
-import com.google.gwt.typedarrays.shared.ArrayBufferView;
-import com.google.gwt.typedarrays.shared.Float32Array;
-import com.google.gwt.typedarrays.shared.Int32Array;
+import elemental2.core.ArrayBuffer;
+import elemental2.core.ArrayBufferView;
+import elemental2.core.Float32Array;
+import elemental2.core.Int32Array;
 
 /**
  * TODO: Lots more documentation needed here.
@@ -917,7 +917,7 @@ public class WebGLRenderingContext extends JavaScriptObject {
   }-*/;
 
   public final void uniform1fv(WebGLUniformLocation location, Float32Array v) {
-    this.uniform1fv(location, (JavaScriptObject)v);
+    this.uniform1fv(location, (JavaScriptObject)(Object)v);
   }
 
   public final void uniform1fv(WebGLUniformLocation location, float[] v) {
@@ -933,7 +933,7 @@ public class WebGLRenderingContext extends JavaScriptObject {
   }-*/;
 
   public final void uniform1iv(WebGLUniformLocation location, Int32Array v) {
-    this.uniform1iv(location, (JavaScriptObject)v);
+    this.uniform1iv(location, (JavaScriptObject)(Object)v);
   }
 
   public final void uniform1iv(WebGLUniformLocation location, int[] v) {
@@ -949,7 +949,7 @@ public class WebGLRenderingContext extends JavaScriptObject {
   }-*/;
 
   public final void uniform2fv(WebGLUniformLocation location, Float32Array v) {
-    this.uniform2fv(location, (JavaScriptObject)v);
+    this.uniform2fv(location, (JavaScriptObject)(Object)v);
   }
 
   public final void uniform2fv(WebGLUniformLocation location, float[] v) {
@@ -965,7 +965,7 @@ public class WebGLRenderingContext extends JavaScriptObject {
   }-*/;
 
   public final void uniform2iv(WebGLUniformLocation location, Int32Array v) {
-    this.uniform2iv(location, (JavaScriptObject)v);
+    this.uniform2iv(location, (JavaScriptObject)(Object)v);
   }
 
   public final void uniform2iv(WebGLUniformLocation location, int[] v) {
@@ -981,7 +981,7 @@ public class WebGLRenderingContext extends JavaScriptObject {
   }-*/;
 
   public final void uniform3fv(WebGLUniformLocation location, Float32Array v) {
-    this.uniform3fv(location, (JavaScriptObject)v);
+    this.uniform3fv(location, (JavaScriptObject)(Object)v);
   }
 
   public final void uniform3fv(WebGLUniformLocation location, float[] v) {
@@ -997,7 +997,7 @@ public class WebGLRenderingContext extends JavaScriptObject {
   }-*/;
 
   public final void uniform3iv(WebGLUniformLocation location, Int32Array v) {
-    this.uniform3iv(location, (JavaScriptObject)v);
+    this.uniform3iv(location, (JavaScriptObject)(Object)v);
   }
 
   public final void uniform3iv(WebGLUniformLocation location, int[] v) {
@@ -1013,7 +1013,7 @@ public class WebGLRenderingContext extends JavaScriptObject {
   }-*/;
 
   public final void uniform4fv(WebGLUniformLocation location, Float32Array v) {
-    this.uniform4fv(location, (JavaScriptObject)v);
+    this.uniform4fv(location, (JavaScriptObject)(Object)v);
   }
 
   public final void uniform4fv(WebGLUniformLocation location, float[] v) {
@@ -1029,7 +1029,7 @@ public class WebGLRenderingContext extends JavaScriptObject {
   }-*/;
 
   public final void uniform4iv(WebGLUniformLocation location, Int32Array v) {
-    this.uniform4iv(location, (JavaScriptObject)v);
+    this.uniform4iv(location, (JavaScriptObject)(Object)v);
   }
 
   public final void uniform4iv(WebGLUniformLocation location, int[] v) {
@@ -1041,7 +1041,7 @@ public class WebGLRenderingContext extends JavaScriptObject {
   }-*/;
 
   public final void uniformMatrix2fv(WebGLUniformLocation location, boolean transpose, Float32Array value) {
-    this.uniformMatrix2fv(location, transpose, (JavaScriptObject)value);
+    this.uniformMatrix2fv(location, transpose, (JavaScriptObject)(Object)value);
   }
 
   public final void uniformMatrix2fv(WebGLUniformLocation location, boolean transpose, float[] value) {
@@ -1053,7 +1053,7 @@ public class WebGLRenderingContext extends JavaScriptObject {
   }-*/;
 
   public final void uniformMatrix3fv(WebGLUniformLocation location, boolean transpose, Float32Array value) {
-    this.uniformMatrix3fv(location, transpose, (JavaScriptObject)value);
+    this.uniformMatrix3fv(location, transpose, (JavaScriptObject)(Object)value);
   }
 
   public final void uniformMatrix3fv(WebGLUniformLocation location, boolean transpose, float[] value) {
@@ -1065,7 +1065,7 @@ public class WebGLRenderingContext extends JavaScriptObject {
   }-*/;
 
   public final void uniformMatrix4fv(WebGLUniformLocation location, boolean transpose, Float32Array value) {
-    this.uniformMatrix4fv(location, transpose, (JavaScriptObject)value);
+    this.uniformMatrix4fv(location, transpose, (JavaScriptObject)(Object)value);
   }
 
   public final void uniformMatrix4fv(WebGLUniformLocation location, boolean transpose, float[] value) {
@@ -1089,7 +1089,7 @@ public class WebGLRenderingContext extends JavaScriptObject {
   }-*/;
 
   public final void vertexAttrib1fv(int indx, Float32Array values) {
-    this.vertexAttrib1fv(indx, (JavaScriptObject)values);
+    this.vertexAttrib1fv(indx, (JavaScriptObject)(Object)values);
   }
 
   public final void vertexAttrib1fv(int indx, float[] values) {
@@ -1105,7 +1105,7 @@ public class WebGLRenderingContext extends JavaScriptObject {
   }-*/;
 
   public final void vertexAttrib2fv(int indx, Float32Array values) {
-    this.vertexAttrib2fv(indx, (JavaScriptObject)values);
+    this.vertexAttrib2fv(indx, (JavaScriptObject)(Object)values);
   }
 
   public final void vertexAttrib2fv(int indx, float[] values) {
@@ -1121,7 +1121,7 @@ public class WebGLRenderingContext extends JavaScriptObject {
   }-*/;
 
   public final void vertexAttrib3fv(int indx, Float32Array values) {
-    this.vertexAttrib3fv(indx, (JavaScriptObject)values);
+    this.vertexAttrib3fv(indx, (JavaScriptObject)(Object)values);
   }
 
   public final void vertexAttrib3fv(int indx, float[] values) {
@@ -1137,7 +1137,7 @@ public class WebGLRenderingContext extends JavaScriptObject {
   }-*/;
 
   public final void vertexAttrib4fv(int indx, Float32Array values) {
-    this.vertexAttrib4fv(indx, (JavaScriptObject)values);
+    this.vertexAttrib4fv(indx, (JavaScriptObject)(Object)values);
   }
 
   public final void vertexAttrib4fv(int indx, float[] values) {
